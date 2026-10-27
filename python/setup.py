@@ -5,7 +5,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from setuptools import setup
+from setuptools import Distribution, setup
 from setuptools.command.build_py import build_py
 from wheel.bdist_wheel import bdist_wheel
 
@@ -59,6 +59,12 @@ class BuildPyWithNativeLibrary(build_py):
         return outputs
 
 
+class NativeDistribution(Distribution):
+    # Forces platlib layout so auditwheel accepts the bundled shared library.
+    def has_ext_modules(self):
+        return True
+
+
 class PlatformWheel(bdist_wheel):
     def finalize_options(self):
         super().finalize_options()
@@ -70,6 +76,7 @@ class PlatformWheel(bdist_wheel):
 
 
 setup(
+    distclass=NativeDistribution,
     cmdclass={
         "build_py": BuildPyWithNativeLibrary,
         "bdist_wheel": PlatformWheel,

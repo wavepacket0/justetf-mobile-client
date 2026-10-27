@@ -20,7 +20,7 @@ where = ["src"]
 
 [tool.cibuildwheel]
 archs = ["auto64"]
-build = "cp312-*"
+build = "cp310-*"
 skip = "*-musllinux_*"
 test-command = "python {project}/test/wheel_smoke.py"
 
@@ -32,9 +32,15 @@ repair-wheel-command = ""
 
 [tool.cibuildwheel.linux]
 manylinux-x86_64-image = "manylinux_2_28"
-before-all = [
-	"curl -fsSLo /tmp/go.tar.gz https://go.dev/dl/go1.27.2.linux-amd64.tar.gz",
-	"echo 'ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5  /tmp/go.tar.gz' | sha256sum -c -",
-	"tar -C /usr/local -xzf /tmp/go.tar.gz",
-	"ln -sf /usr/local/go/bin/go /usr/local/bin/go",
-]
+manylinux-aarch64-image = "manylinux_2_28"
+before-all = '''
+set -eu
+case "$(uname -m)" in
+  x86_64) GOARCH=amd64; GOSUM=65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40;;
+  aarch64) GOARCH=arm64; GOSUM=a06e99309dbcbdca1a8ccd2282c3ee146e55930886e26b4f1193269587165f49;;
+esac
+curl -fsSLo /tmp/go.tar.gz "https://go.dev/dl/go1.27.3.linux-${GOARCH}.tar.gz"
+echo "${GOSUM}  /tmp/go.tar.gz" | sha256sum -c -
+tar -C /usr/local -xzf /tmp/go.tar.gz
+ln -sf /usr/local/go/bin/go /usr/local/bin/go
+'''
