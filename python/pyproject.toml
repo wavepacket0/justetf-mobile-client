@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77", "wheel>=0.43"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "justetf-mobile-client"
+version = "0.0.1"
+description = "Native Python bindings for the Go justETF mobile API client"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "wavepacket0" }]
+
+[project.urls]
+Homepage = "https://github.com/wavepacket0/justetf-mobile-client"
+Source = "https://github.com/wavepacket0/justetf-mobile-client"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.cibuildwheel]
+archs = ["auto64"]
+build = "cp312-*"
+skip = "*-musllinux_*"
+test-command = "python {project}/test/wheel_smoke.py"
+
+[tool.cibuildwheel.windows]
+repair-wheel-command = ""
+
+[tool.cibuildwheel.macos]
+repair-wheel-command = ""
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"
+before-all = [
+	"curl -fsSLo /tmp/go.tar.gz https://go.dev/dl/go1.27.2.linux-amd64.tar.gz",
+	"echo 'ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5  /tmp/go.tar.gz' | sha256sum -c -",
+	"tar -C /usr/local -xzf /tmp/go.tar.gz",
+	"ln -sf /usr/local/go/bin/go /usr/local/bin/go",
+]

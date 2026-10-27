@@ -1,0 +1,16 @@
+/bin/
+/justETF
+/testdata/
+/cmd/justetf-generator/
+.env
+.env.*
+!/.env.example
+**/__pycache__/
+*.egg-info/
+/python/build/
+/python/dist/
+/wheelhouse/
+INTEGRATION_PLAN.md
+/.github/hooks/
+/.vscode/
+/python/LICENSE
