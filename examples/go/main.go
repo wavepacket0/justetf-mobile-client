@@ -14,7 +14,7 @@ import (
 	justetf "github.com/wavepacket0/justetf-mobile-client"
 )
 
-const defaultISIN = "IE00B5BMR087"
+const defaultISIN = "IE000VAHT5T0"
 
 func main() {
 	if err := run(os.Args[1:]); err != nil {

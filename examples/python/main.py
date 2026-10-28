@@ -6,7 +6,7 @@ from typing import Any
 
 from justetf_mobile_client import APIError, Client, ExposureOptions, SearchOptions
 
-DEFAULT_ISIN = "IE00B5BMR087"
+DEFAULT_ISIN = "IE000VAHT5T0"
 
 
 def print_json(title: str, body: Any) -> None:

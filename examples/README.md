@@ -18,7 +18,7 @@ environment. A `.env` file is not read, and these differ from the test-only
 export JUSTETF_EMAIL=you@example.com JUSTETF_PASSWORD=...   # PowerShell: $env:JUSTETF_EMAIL = "..."
 ```
 
-The default ISIN is `IE00B5BMR087`.
+The default ISIN is `IE000VAHT5T0`.
 
 ## Python setup
 
