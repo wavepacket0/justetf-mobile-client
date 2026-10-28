@@ -35,7 +35,7 @@ class EndpointTests(unittest.TestCase):
         if self.mode == "offline":
             self.assertTrue(parsed.scheme == "http" and parsed.hostname == "127.0.0.1", "offline contracts require the loopback mock server")
         else:
-            self.assertTrue(self.mode in ("online-readonly", "online-mutations") and target == "https://api.mobile.justetf.com", "online contracts require the official HTTPS endpoint")
+            self.assertTrue(self.mode in ("online-readonly", "online") and target == "https://api.mobile.justetf.com", "online contracts require the official HTTPS endpoint")
         self.client = api.Client(os.environ["JUSTETF_TEST_LIBRARY"], base_url=target, language="en", timeout=20)
         self.addCleanup(self.client.close)
         self.email = os.environ["JUSTETF_TEST_EMAIL"]
@@ -106,7 +106,7 @@ class EndpointTests(unittest.TestCase):
 
     def test_mutation_workflows(self):
         if self.mode == "online-readonly":
-            self.skipTest("account mutations require online-mutations mode")
+            self.skipTest("account mutations require online mode")
         prefix = "sdk-test-" + uuid.uuid4().hex
         isin = "IE00B5BMR087"
         portfolio_id = [None]
@@ -154,7 +154,7 @@ class CleanupSafetyTests(unittest.TestCase):
         for mode, target in (
             ("offline", "https://api.mobile.justetf.com"),
             ("online-readonly", "http://127.0.0.1:1"),
-            ("online-mutations", "https://example.invalid"),
+            ("online", "https://example.invalid"),
         ):
             endpoint = EndpointTests("test_endpoint_contracts")
             with self.subTest(mode=mode), patch.dict(os.environ, {"JUSTETF_TEST_MODE": mode, "JUSTETF_TEST_BASE_URL": target}):

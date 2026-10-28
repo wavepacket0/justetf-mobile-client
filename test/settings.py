@@ -5,7 +5,7 @@ from pathlib import Path
 from dotenv import dotenv_values
 
 
-MODES = ("offline", "online-readonly", "online-mutations")
+MODES = ("offline", "online-readonly", "online")
 LIVE_BASE_URL = "https://api.mobile.justetf.com"
 OFFLINE_EMAIL = "test@example.invalid"
 OFFLINE_PASSWORD = "test:password"
@@ -23,7 +23,7 @@ def load_settings(root: Path, environment=None, mode=None) -> Settings:
     values.update(os.environ if environment is None else environment)
     selected = mode if mode is not None else values.get("JUSTETF_TEST_MODE", "offline")
     if selected not in MODES:
-        raise ValueError("JUSTETF_TEST_MODE must be offline, online-readonly, or online-mutations")
+        raise ValueError("JUSTETF_TEST_MODE must be offline, online-readonly, or online")
     if selected == "offline":
         return Settings(selected, OFFLINE_EMAIL, OFFLINE_PASSWORD)
     email = values.get("JUSTETF_TEST_EMAIL", "") or ""

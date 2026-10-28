@@ -49,7 +49,7 @@ func endpointClient(t *testing.T) *justetf.Client {
 		if parsed.Scheme != "http" || parsed.Hostname() != "127.0.0.1" {
 			t.Fatal("offline contracts require the loopback mock server")
 		}
-	} else if (mode != "online-readonly" && mode != "online-mutations") || target != "https://api.mobile.justetf.com" {
+	} else if (mode != "online-readonly" && mode != "online") || target != "https://api.mobile.justetf.com" {
 		t.Fatal("online contracts require the official HTTPS endpoint")
 	}
 	client, err := justetf.NewClient(justetf.Config{BaseURL: target, Language: "en", Timeout: 20 * time.Second})
@@ -247,7 +247,7 @@ func TestEndpointContracts(t *testing.T) {
 
 func TestMutationWorkflows(t *testing.T) {
 	if os.Getenv("JUSTETF_TEST_MODE") == "online-readonly" {
-		t.Skip("account mutations require online-mutations mode")
+		t.Skip("account mutations require online mode")
 	}
 	client := endpointClient(t)
 	prefix := fmt.Sprintf("sdk-test-go-%d", time.Now().UnixNano())

@@ -10,7 +10,7 @@ class SettingsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.assertEqual(load_settings(root, {}).mode, "offline")
-            for mode in ("online-readonly", "online-mutations"):
+            for mode in ("online-readonly", "online"):
                 settings = load_settings(root, {
                     "JUSTETF_TEST_MODE": mode,
                     "JUSTETF_TEST_EMAIL": "account@example.invalid",
@@ -23,7 +23,7 @@ class SettingsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / ".env").write_text(
-                'JUSTETF_TEST_MODE=online-mutations\n'
+                'JUSTETF_TEST_MODE=online\n'
                 'JUSTETF_TEST_EMAIL=account@example.invalid\n'
                 'JUSTETF_TEST_PASSWORD="literal-${NOT_INTERPOLATED}"\n', encoding="utf-8",
             )
@@ -36,6 +36,6 @@ class SettingsTests(unittest.TestCase):
     def test_invalid_mode_and_missing_credentials_fail(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            for mode in ("", "online", "typo", "online-readonly", "online-mutations"):
+            for mode in ("", "online-write", "typo", "online-readonly"):
                 with self.subTest(mode=mode), self.assertRaises(ValueError):
                     load_settings(root, {"JUSTETF_TEST_MODE": mode})
