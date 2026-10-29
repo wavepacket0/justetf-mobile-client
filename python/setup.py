@@ -12,6 +12,11 @@ from wheel.bdist_wheel import bdist_wheel
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_NAME = "justetf_mobile_client"
+PACKAGE_README = Path(__file__).with_name("README.md")
+REPOSITORY_README = REPOSITORY_ROOT / "README.md"
+
+if REPOSITORY_README.is_file():
+    shutil.copy2(REPOSITORY_README, PACKAGE_README)
 
 
 def native_library_name() -> str:

@@ -4,8 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "justetf-mobile-client"
-version = "0.0.1"
+version = "0.1.0"
 description = "Native Python bindings for the Go justETF mobile API client"
+readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
