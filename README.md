@@ -36,6 +36,23 @@ cd justetf-mobile-client
 go run ./examples/go profile
 ```
 
+### Python
+
+Install the published package from PyPI:
+
+```sh
+python -m pip install justetf-mobile-client
+```
+
+The wheel includes the native library, so no library path is needed:
+
+```python
+from justetf_mobile_client import Client
+
+with Client() as client:
+    print(client.get_profile("IE000VAHT5T0"))
+```
+
 To build from source, follow [Build](#build).
 
 See [examples/](examples/README.md) for additional Go and Python examples and [Test](#test) for testing. 
