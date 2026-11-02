@@ -87,7 +87,8 @@ Build and smoke-test a wheel from the repository root. Wheel builds require `cib
 
 ```bash
 python -m pip install --upgrade cibuildwheel
-cp LICENSE python/LICENSE   # CI does this so the wheel bundles the license
+cp LICENSE python/LICENSE
+cp README.md python/README.md
 python -m cibuildwheel --config-file python/pyproject.toml --output-dir wheelhouse python
 ```
 
